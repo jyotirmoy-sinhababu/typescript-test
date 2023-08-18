@@ -2,7 +2,15 @@ import FormComp from '../../components/formComp/FormComp';
 
 const FormPage = () => {
   return (
-    <div>
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignContent: 'center',
+        paddingTop: '10%',
+        gap: '25px',
+      }}
+    >
       <FormComp />
     </div>
   );
