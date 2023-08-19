@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
 
 import axios from 'axios';
 
@@ -20,7 +20,18 @@ const TableComp = () => {
     });
   }, []);
 
-  return <div></div>;
+  const columns: GridColDef[] = [
+    { field: 'id', headerName: 'ID', width: 70 },
+    { field: 'userId', headerName: 'User ID', width: 90 },
+    { field: 'title', headerName: 'Title', width: 200 },
+    { field: 'body', headerName: 'Body', width: 400 },
+  ];
+
+  return (
+    <div style={{ height: 450, width: '100%' }}>
+      <DataGrid rows={data} columns={columns} />
+    </div>
+  );
 };
 
 export default TableComp;

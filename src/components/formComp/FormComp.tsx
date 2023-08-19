@@ -7,6 +7,7 @@ const FormComp = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    navigate('/second');
   };
 
   return (
