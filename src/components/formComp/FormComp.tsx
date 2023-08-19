@@ -1,6 +1,10 @@
 import { FormControl, FormGroup, TextField, Button } from '@mui/material';
 
+import { useNavigate } from 'react-router-dom';
+
 const FormComp = () => {
+  const navigate = useNavigate();
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
   };
