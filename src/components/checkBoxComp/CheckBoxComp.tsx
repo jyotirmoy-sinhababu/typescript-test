@@ -25,6 +25,8 @@ const CheckBoxComp = () => {
     useState<boolean>(false);
   const [isDesignChecked, setIsDesignChecked] = useState<boolean>(false);
 
+  const [isSubChecked, setIsServiceChecked] = useState<boolean>(false);
+
   const [selectedDepartments, setSelectedDepartments] = useState<any>({
     service: [],
     design: [],
@@ -67,6 +69,28 @@ const CheckBoxComp = () => {
   };
   console.log(selectedDepartments);
 
+  ////////////////////////////
+
+  const handleSubCategoryChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    catagories: string,
+    subCatagories: string
+  ) => {
+    let isChecked = e.target.checked;
+    let data = { ...selectedDepartments };
+    if (isChecked && data.service.includes(subCatagories)) {
+      const filtered = data.service.filter((item: any) => {
+        return item != subCatagories;
+      });
+      data.service.push(filtered);
+    }
+    if (
+      (!isChecked && !data.service.includes(subCatagories)) ||
+      data.service.length == 0
+    ) {
+      data.service.push(subCatagories);
+    }
+  };
   return (
     <div>
       <FormGroup>
@@ -106,10 +130,18 @@ const CheckBoxComp = () => {
                         control={
                           <Checkbox
                             checked={
-                              department?.department == 'customer_service'
-                                ? isServiceDepChecked
-                                : isDesignChecked
+                              true
+                              // department?.department == 'customer_service'
+                              //   ? isServiceDepChecked
+                              //   : isDesignChecked
                             }
+                            onChange={(e) => {
+                              handleSubCategoryChange(
+                                e,
+                                department.department,
+                                subDep
+                              );
+                            }}
                           />
                         }
                         label={subDep}
