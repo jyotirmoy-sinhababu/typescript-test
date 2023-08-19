@@ -1,9 +1,9 @@
-import FormPage from '../formPage/FormPage';
+import { Outlet } from 'react-router-dom';
 
 const LandingPage = () => {
   return (
     <div>
-      <FormPage />
+      <Outlet />
     </div>
   );
 };

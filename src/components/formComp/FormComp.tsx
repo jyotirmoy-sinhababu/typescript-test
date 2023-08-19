@@ -1,31 +1,32 @@
 import { FormControl, FormGroup, TextField, Button } from '@mui/material';
 
 const FormComp = () => {
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+  };
+
   return (
-    <form>
+    <form
+      onSubmit={(e) => {
+        handleSubmit(e);
+      }}
+    >
       <FormControl>
         <FormGroup>
           <TextField
             type='name'
-            error={false}
-            id='filled-error-helper-text'
-            helperText='Incorrect entry.'
             placeholder='enter your name'
-            sx={{ color: 'black', width: '450px' }}
+            sx={{ color: 'black', width: '450px', margin: '25px' }}
           />
           <TextField
             type='number'
-            error={false}
-            id='filled-error-helper-text'
-            helperText='Incorrect entry.'
             placeholder='enter your number'
+            sx={{ color: 'black', width: '450px', margin: '25px' }}
           />
           <TextField
             type='email'
-            error={false}
-            id='filled-error-helper-text'
-            helperText='Incorrect entry.'
             placeholder='enter your email'
+            sx={{ color: 'black', width: '450px', margin: '25px' }}
           />
         </FormGroup>
         <Button
@@ -35,6 +36,7 @@ const FormComp = () => {
             height: '45px',
             fontSize: '19px',
             fontWeight: '600',
+            margin: '25px',
           }}
           type='submit'
           variant='outlined'
