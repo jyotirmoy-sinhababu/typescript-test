@@ -22,37 +22,12 @@ const departmentData: Department[] = [
 ];
 
 const CheckBoxComp = () => {
-  const [isServiceDepChecked, setIsServiceDepChecked] = useState<boolean>();
-
   const [selectedDepartments, setSelectedDepartments] = useState<any>({
     service: [],
     design: [],
   });
 
   const checkRef = useRef<string>();
-
-  //////////////////////////////////////
-
-  const dataChecker = (dep: string) => {
-    // let isChecked = true;
-    // let filteredDepData = departmentData?.filter(
-    //   (data) => data?.department === dep
-    // );
-    // filteredDepData[0]?.sub_departments?.map((data) => {
-    //   if (
-    //     dep === 'customer_service' &&
-    //     !selectedDepartments?.service?.includes(data)
-    //   ) {
-    //     isChecked = false;
-    //   }
-    //   if (dep === 'design' && !selectedDepartments?.design?.includes(data)) {
-    //     isChecked = false;
-    //   }
-    // });
-    // setIsServiceDepChecked(isChecked);
-    let isChecked = true;
-    const data = { ...selectedDepartments };
-  };
 
   ///////////////////////////////////////////
   const handleCheckboxChange = (
