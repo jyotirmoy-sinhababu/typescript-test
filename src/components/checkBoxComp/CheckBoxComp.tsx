@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Checkbox, FormGroup, FormControlLabel } from '@mui/material';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+
 interface Department {
   department: string;
   sub_departments: string[];
@@ -21,17 +22,39 @@ const departmentData: Department[] = [
 ];
 
 const CheckBoxComp = () => {
-  const [isServiceDepChecked, setIsServiceDepChecked] =
-    useState<boolean>(false);
-  const [isDesignChecked, setIsDesignChecked] = useState<boolean>(false);
-
-  const [isSubChecked, setIsServiceChecked] = useState<boolean>(false);
+  const [isServiceDepChecked, setIsServiceDepChecked] = useState<boolean>();
 
   const [selectedDepartments, setSelectedDepartments] = useState<any>({
     service: [],
     design: [],
   });
 
+  const checkRef = useRef<string>();
+
+  //////////////////////////////////////
+
+  const dataChecker = (dep: string, e: React.ChangeEvent<HTMLInputElement>) => {
+    // let isChecked = true;
+    // let filteredDepData = departmentData?.filter(
+    //   (data) => data?.department === dep
+    // );
+    // filteredDepData[0]?.sub_departments?.map((data) => {
+    //   if (
+    //     dep === 'customer_service' &&
+    //     !selectedDepartments?.service?.includes(data)
+    //   ) {
+    //     isChecked = false;
+    //   }
+    //   if (dep === 'design' && !selectedDepartments?.design?.includes(data)) {
+    //     isChecked = false;
+    //   }
+    // });
+    // setIsServiceDepChecked(isChecked);
+    let isChecked = true;
+    const data = { ...selectedDepartments };
+  };
+
+  ///////////////////////////////////////////
   const handleCheckboxChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     dep: string,
@@ -42,29 +65,25 @@ const CheckBoxComp = () => {
       let data = { ...selectedDepartments };
       data.service = subDep;
       setSelectedDepartments(data);
-      !isServiceDepChecked
-        ? setIsServiceDepChecked(true)
-        : setIsServiceDepChecked(false);
+      // dataChecker(dep);
     }
     if (!isChecked && dep === 'customer_service') {
       let data = { ...selectedDepartments };
       data.service = [];
       setSelectedDepartments(data);
-      !isServiceDepChecked
-        ? setIsServiceDepChecked(true)
-        : setIsServiceDepChecked(false);
+      // dataChecker(dep);
     }
     if (isChecked && dep === 'design') {
       let data = { ...selectedDepartments };
       data.design = subDep;
       setSelectedDepartments(data);
-      !isDesignChecked ? setIsDesignChecked(true) : setIsDesignChecked(false);
+      // dataChecker(dep);
     }
     if (!isChecked && dep === 'design') {
       let data = { ...selectedDepartments };
       data.design = [];
       setSelectedDepartments(data);
-      !isDesignChecked ? setIsDesignChecked(true) : setIsDesignChecked(false);
+      // dataChecker(dep);
     }
   };
   console.log(selectedDepartments);
@@ -73,24 +92,36 @@ const CheckBoxComp = () => {
 
   const handleSubCategoryChange = (
     e: React.ChangeEvent<HTMLInputElement>,
-    catagories: string,
-    subCatagories: string
+    dep: string
   ) => {
-    let isChecked = e.target.checked;
-    let data = { ...selectedDepartments };
-    if (isChecked && data.service.includes(subCatagories)) {
-      const filtered = data.service.filter((item: any) => {
-        return item != subCatagories;
-      });
-      data.service.push(filtered);
+    let value = e.target.value;
+    // dataChecker(dep);
+    if (checkRef.current == value && dep == 'customer_service') {
+      let data = { ...selectedDepartments };
+      if (data.service.includes(value)) {
+        const filteredData = data.service.filter((item: string) => {
+          return item != value;
+        });
+        data.service = filteredData;
+      } else {
+        data.service.push(value);
+      }
+      setSelectedDepartments(data);
     }
-    if (
-      (!isChecked && !data.service.includes(subCatagories)) ||
-      data.service.length == 0
-    ) {
-      data.service.push(subCatagories);
+    if (checkRef.current == value && dep == 'design') {
+      let data = { ...selectedDepartments };
+      if (data.design.includes(value)) {
+        const filteredData = data.design.filter((item: string) => {
+          return item != value;
+        });
+        data.design = filteredData;
+      } else {
+        data.design.push(value);
+      }
+      setSelectedDepartments(data);
     }
   };
+
   return (
     <div>
       <FormGroup>
@@ -107,9 +138,10 @@ const CheckBoxComp = () => {
                     control={
                       <Checkbox
                         checked={
-                          department?.department == 'customer_service'
-                            ? isServiceDepChecked
-                            : isDesignChecked
+                          // department?.department == 'customer_service'
+                          //   ? isServiceDepChecked
+                          //   : isDesignChecked
+                          isServiceDepChecked
                         }
                         onChange={(e) => {
                           handleCheckboxChange(
@@ -130,17 +162,14 @@ const CheckBoxComp = () => {
                         control={
                           <Checkbox
                             checked={
-                              true
-                              // department?.department == 'customer_service'
-                              //   ? isServiceDepChecked
-                              //   : isDesignChecked
+                              department?.department === 'customer_service'
+                                ? selectedDepartments?.service?.includes(subDep)
+                                : selectedDepartments?.design?.includes(subDep)
                             }
+                            value={subDep}
                             onChange={(e) => {
-                              handleSubCategoryChange(
-                                e,
-                                department.department,
-                                subDep
-                              );
+                              checkRef.current = e.target.value;
+                              handleSubCategoryChange(e, department.department);
                             }}
                           />
                         }

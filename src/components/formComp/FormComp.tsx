@@ -2,27 +2,30 @@ import { FormControl, FormGroup, TextField, Button } from '@mui/material';
 
 import { useNavigate } from 'react-router-dom';
 
+interface FormValues {
+  name: string;
+  number: number;
+  email: string;
+}
+
 const FormComp = () => {
   const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmitData: void = (e: React.FormEvent) => {
     e.preventDefault();
     navigate('/second');
   };
 
   return (
-    <form
-      onSubmit={(e) => {
-        handleSubmit(e);
-      }}
-    >
+    <form onSubmit={() => {}}>
       <FormControl>
         <FormGroup>
           <TextField
-            type='name'
+            type='text'
             placeholder='enter your name'
             sx={{ color: 'black', width: '450px', margin: '25px' }}
           />
+
           <TextField
             type='number'
             placeholder='enter your number'
