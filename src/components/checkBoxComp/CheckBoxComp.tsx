@@ -33,7 +33,7 @@ const CheckBoxComp = () => {
 
   //////////////////////////////////////
 
-  const dataChecker = (dep: string, e: React.ChangeEvent<HTMLInputElement>) => {
+  const dataChecker = (dep: string) => {
     // let isChecked = true;
     // let filteredDepData = departmentData?.filter(
     //   (data) => data?.department === dep
@@ -141,7 +141,15 @@ const CheckBoxComp = () => {
                           // department?.department == 'customer_service'
                           //   ? isServiceDepChecked
                           //   : isDesignChecked
-                          isServiceDepChecked
+                          department?.department === 'customer_service'
+                            ? selectedDepartments?.service?.includes(
+                                'support' && 'customer_success'
+                              )
+                            : selectedDepartments?.design?.includes(
+                                'graphic_design' &&
+                                  'product_design' &&
+                                  'web_design'
+                              )
                         }
                         onChange={(e) => {
                           handleCheckboxChange(

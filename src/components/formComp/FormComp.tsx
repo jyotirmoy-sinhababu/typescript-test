@@ -10,21 +10,23 @@ const FormComp = () => {
     numEr: '',
     emailEr: '',
   });
-  const [inputData, setInputData] = useState<any>();
+  const [inputData, setInputData] = useState<any>({
+    username: '',
+    num: '',
+    email: '',
+  });
 
   const navigate = useNavigate();
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    const key: string = 'data';
-
-    if (inputData.name == '') {
+    if (inputData.username == '') {
       setErr({ ...err, nameEr: 'Required' });
     }
-    if (!/^[A-Za-z\s'-]{2,50}$/.test(inputData.name)) {
+    if (!/^[A-Za-z\s'-]{2,50}$/.test(inputData.username)) {
       setErr({ ...err, nameEr: 'Wrong format' });
     }
-    if (inputData.num != '') {
+    if (inputData.num == '') {
       setErr({ ...err, numEr: 'Number should be 10 digits' });
     }
     if (!/^[1-9]\d*$/.test(inputData.num)) {
@@ -55,9 +57,12 @@ const FormComp = () => {
             type='text'
             placeholder='enter your name'
             sx={{ color: 'black', width: '450px', margin: '25px' }}
-            name='name'
+            name='username'
             onChange={(e) => {
-              setInputData({ ...inputData, [e.target.name]: e.target.value });
+              setInputData({
+                ...inputData,
+                [e.target.name]: e.target.value,
+              });
             }}
           />
           {err.nameEr ? (
