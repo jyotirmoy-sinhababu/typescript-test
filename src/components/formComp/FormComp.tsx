@@ -22,26 +22,21 @@ const FormComp = () => {
     e.preventDefault();
     if (inputData.username == '') {
       setErr({ ...err, nameEr: 'Required' });
-    }
-    if (!/^[A-Za-z\s'-]{2,50}$/.test(inputData.username)) {
+    } else if (!/^[a-zA-Z ]+$/.test(inputData.username)) {
       setErr({ ...err, nameEr: 'Wrong format' });
-    }
-    if (inputData.num == '') {
+    } else if (inputData.num == '') {
       setErr({ ...err, numEr: 'Number should be 10 digits' });
-    }
-    if (!/^[1-9]\d*$/.test(inputData.num)) {
+    } else if (!/^[0-9]+$/.test(inputData.num)) {
       setErr({ ...err, numEr: 'Wrong format' });
-    }
-    if (inputData.email == '') {
+    } else if (inputData.email == '') {
       setErr({ ...err, emailEr: ' Required' });
-    }
-    if (
-      !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(inputData.num)
+    } else if (
+      !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(inputData.email)
     ) {
       setErr({ ...err, emailEr: 'Wrong format' });
     } else {
       navigate('/second');
-      localStorage.setItem(key, JSON.stringify(inputData));
+      localStorage.setItem('data', JSON.stringify(inputData));
     }
   };
 
